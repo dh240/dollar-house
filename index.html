@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دولار هاوس | أسعار الصرف المباشرة في العراق</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo & Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- html2canvas for generating shareable image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .pulse-live {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 text-slate-950 text-xs sm:text-sm font-bold py-2 px-4 text-center shadow-md flex flex-wrap items-center justify-center gap-4">
+        <span><i class="fa-solid fa-bullhorn ml-1"></i> أسعار الصرف المباشرة في الأسوق العراقية - تحديث لحظي ومستمر</span>
+        <span class="bg-slate-950/20 px-2 py-0.5 rounded-md text-xs"><i class="fa-solid fa-location-dot ml-1"></i> الموقع: سوق دهوك - مقابل مطعم مرجان</span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors duration-300">
+        <div class="w-full px-3 sm:px-6 h-20 flex items-center justify-between">
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center shadow-lg shadow-amber-500/20 text-slate-950 font-black text-2xl">
+                    <i class="fa-solid fa-house-chimney-dollar"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500 bg-clip-text text-transparent">دولار هاوس</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">بورصة العراق المباشرة</p>
+                </div>
+            </div>
+
+            <!-- Actions Navbar -->
+            <div class="flex items-center gap-1.5 sm:gap-3">
+                <!-- Chat with employee button -->
+                <button onclick="openChatModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition">
+                    <i class="fa-solid fa-headset"></i>
+                    <span class="hidden sm:inline">التحدث مع موظف</span>
+                </button>
+
+                <!-- Notifications Toggle Button -->
+                <button onclick="toggleNotifications()" id="notif-toggle-btn" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm" title="تفعيل/إيقاف التنبيهات">
+                    <i class="fa-solid fa-bell-slash text-slate-400" id="notif-icon"></i>
+                    <span class="hidden md:inline" id="notif-text">التنبيهات معطلة</span>
+                </button>
+
+                <button onclick="openShareModal()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-amber-600 dark:text-amber-400 border border-amber-500/30 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm hover:scale-105">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span class="hidden sm:inline">مشاركة الأسعار</span>
+                </button>
+
+                <button onclick="openConverterModal()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-calculator text-amber-500 dark:text-amber-400"></i>
+                    <span class="hidden sm:inline">محول العملات</span>
+                </button>
+
+                <button onclick="openHistoryModal()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition" title="سجل أسعار الدولار اليومية">
+                    <i class="fa-solid fa-chart-line text-emerald-600 dark:text-emerald-400"></i>
+                    <span class="hidden md:inline">سجل الدولار اليومي</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow w-full px-2 sm:px-4 py-6">
+        
+        <!-- Currencies Rate Table Section -->
+        <div class="bg-white dark:bg-slate-900 border-y sm:border border-slate-200 dark:border-slate-800 sm:rounded-3xl shadow-xl dark:shadow-2xl overflow-hidden mb-8 w-full transition-colors duration-300">
+            <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-coins text-amber-500 dark:text-amber-400"></i> جدول أسعار العملات الأجنبية مقابل الدينار العراقي
+                    </h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">الأسعار الرسمية المعتمدة في شركات الصرافة والأسواق المحلية</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto w-full">
+                <table class="w-full text-right border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                            <th class="py-3 px-3 sm:px-4 font-semibold">العملة</th>
+                            <th class="py-3 px-3 sm:px-4 font-semibold">رمز العملة</th>
+                            <th class="py-3 px-3 sm:px-4 font-semibold">شراء المكتب</th>
+                            <th class="py-3 px-3 sm:px-4 font-semibold">بيع المكتب</th>
+                            <th class="py-3 px-3 sm:px-4 font-semibold text-center">التغيير</th>
+                        </tr>
+                    </thead>
+                    <tbody id="currencies-table-body" class="divide-y divide-slate-200 dark:divide-slate-800/60 font-medium">
+                        <!-- Dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Live Market Status & Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 px-2 sm:px-0">
+            <!-- Dollar Card -->
+            <div class="bg-gradient-to-br from-white to-slate-100 dark:from-slate-900 dark:to-slate-900/90 border border-amber-500/40 dark:border-amber-500/30 rounded-3xl p-6 shadow-xl dark:shadow-2xl relative overflow-hidden group hover:border-amber-500 transition-colors duration-300">
+                <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition"></div>
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-slate-600 dark:text-slate-400 text-sm font-medium flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulse-live"></span>
+                        سعر الدولار الأمريكي / IQD
+                    </span>
+                    <span class="bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-full font-bold">رئيسي</span>
+                </div>
+                <div class="flex items-baseline gap-2 mb-3">
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white" id="main-usd-buy">169,100</h2>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">دينار / 100 دولار</span>
+                </div>
+                <div class="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">
+                    <span>شراء المكتب: <strong class="text-amber-600 dark:text-amber-400" id="main-usd-buy-rate">169,100</strong></span>
+                    <span>بيع المكتب: <strong class="text-amber-600 dark:text-amber-400" id="main-usd-sell-rate">169,250</strong></span>
+                </div>
+            </div>
+
+            <!-- Market Trend Card -->
+            <div class="bg-gradient-to-br from-white to-slate-100 dark:from-slate-900 dark:to-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xl dark:shadow-2xl flex flex-col justify-between transition-colors duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-slate-600 dark:text-slate-400 text-sm font-medium">حالة السوق العام</span>
+                        <i class="fa-solid fa-chart-pie text-amber-500 dark:text-amber-400"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">استقرار مع ميل طفيف للارتفاع</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">تحديثات فورية من بورصتي الكفاح والحارثية</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-500 dark:text-slate-500 pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-between">
+                    <span>آخر تحديث: <span id="last-update-time" class="text-slate-700 dark:text-slate-300 font-medium">الآن</span></span>
+                    <span class="text-amber-600 dark:text-amber-400 font-semibold cursor-pointer" onclick="fetchLivePrices()">تحديث البيانات <i class="fa-solid fa-rotate"></i></span>
+                </div>
+            </div>
+
+            <!-- Quick Converter Preview Widget -->
+            <div class="bg-gradient-to-br from-white to-slate-100 dark:from-slate-900 dark:to-slate-900/90 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-xl dark:shadow-2xl flex flex-col justify-between transition-colors duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-600 dark:text-slate-400 text-sm font-medium">تحويل سريع</span>
+                        <i class="fa-solid fa-exchange-alt text-amber-500 dark:text-amber-400"></i>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <input type="number" id="quick-calc-input" value="100" placeholder="المبلغ بالدولار" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-amber-500 text-sm" oninput="quickCalculate()">
+                        <span class="text-xs text-slate-600 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-3 py-2.5 rounded-xl font-bold">USD</span>
+                    </div>
+                </div>
+                <div class="bg-slate-100 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span class="text-xs text-slate-500 dark:text-slate-400">المقابل بالدينار العراقي:</span>
+                    <span class="text-amber-600 dark:text-amber-400 font-black text-base" id="quick-calc-result">169,100 IQD</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer with Dynamic Social Media Links & Theme Switcher -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400 w-full transition-colors duration-300">
+        <div class="w-full px-4 max-w-6xl mx-auto flex flex-col items-center gap-6">
+            
+            <!-- Location Badge -->
+            <div class="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-4 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 flex items-center gap-2 text-xs">
+                <i class="fa-solid fa-location-dot text-amber-500 dark:text-amber-400"></i>
+                <span>عنوان الشركة: سوق دهوك - مقابل مطعم مرجان</span>
+            </div>
+
+            <!-- Social Media Icons Row -->
+            <div id="footer-social-links" class="flex flex-wrap items-center justify-center gap-3">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Theme Toggle Button -->
+            <div>
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 px-4 py-2 rounded-2xl text-xs font-bold flex items-center gap-2 transition-all shadow-sm">
+                    <i id="theme-toggle-icon" class="fa-solid fa-moon text-amber-500 dark:text-amber-400"></i>
+                    <span id="theme-toggle-text">الوضع الليلي</span>
+                </button>
+            </div>
+
+            <div class="w-full border-t border-slate-200 dark:border-slate-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p>جميع الحقوق محفوظة © 2026 <strong class="text-amber-600 dark:text-amber-400">دولار هاوس</strong> - منصة أسعار الصرف في العراق</p>
+                
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <span class="hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer" onclick="openChatModal()">التحدث مع موظف</span>
+                    <span class="hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer" onclick="openShareModal()">مشاركة الأسعار</span>
+                    <span class="hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer" onclick="openConverterModal()">محول العملات</span>
+                    <span class="hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer" onclick="openHistoryModal()">سجل الدولار</span>
+                    
+                    <button onclick="openAdminModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md transition relative">
+                        <i class="fa-solid fa-lock text-[10px]"></i>
+                        <span>الإدارة</span>
+                        <span id="admin-badge-dot" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full hidden animate-ping"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ==================== CHAT WITH EMPLOYEE MODAL (FOR VISITORS) ==================== -->
+    <div id="chatModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeChatModal()" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition border border-slate-200 dark:border-slate-700 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-5">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl mx-auto mb-2">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">التحدث مع موظف الدعم</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">اترك تفاصيلك وسيتصل بك أحد موظفي الإدارة فوراً</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">الاسم الكريم</label>
+                    <input type="text" id="visitor-name" placeholder="أدخل اسمك الكامل" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-emerald-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">رقم الهاتف / واتساب</label>
+                    <input type="text" id="visitor-phone" placeholder="07xxxxxxxxx" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-emerald-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">رسالتك أو استفسارك</label>
+                    <textarea id="visitor-message" rows="3" placeholder="اكتب استفسارك هنا (مثلاً: أريد تحويل مبلغ...)" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-emerald-500 text-sm resize-none"></textarea>
+                </div>
+                <button onclick="submitVisitorChatRequest()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-emerald-600/20">إرسال الطلب إلى الإدارة</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== SHARE PRICE CARD MODAL ==================== -->
+    <div id="shareModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeShareModal()" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition border border-slate-200 dark:border-slate-700 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-share-nodes text-amber-500 dark:text-amber-400"></i> مشاركة الأسعار
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">صورة شاملة لكل أسعار العملات مع شعار دولار هاوس ووقت الإصدار.</p>
+
+            <div class="flex justify-center mb-6 overflow-x-auto">
+                <div id="capture-card" class="bg-[#0f172a] border border-slate-700 rounded-2xl p-5 w-[390px] shadow-2xl text-slate-100 flex flex-col shrink-0">
+                    <div class="text-center pb-4 border-b border-slate-800 mb-3">
+                        <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 text-slate-950 font-black text-xl mb-1 shadow">
+                            <i class="fa-solid fa-house-chimney-dollar"></i>
+                        </div>
+                        <h4 class="text-base font-black text-amber-400">دولار هاوس | أسعار الصرف</h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5">سوق دهوك - مقابل مطعم مرجان</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5" id="share-modal-timestamp">وقت إنشاء الصورة: </p>
+                    </div>
+
+                    <div class="overflow-hidden rounded-xl border border-slate-800 mb-3 text-xs">
+                        <div class="bg-slate-800/80 px-3 py-2 font-bold flex justify-between text-slate-300 border-b border-slate-700">
+                            <span>العملة</span>
+                            <div class="flex gap-6">
+                                <span class="w-16 text-center">شراء المكتب</span>
+                                <span class="w-16 text-center">بيع المكتب</span>
+                            </div>
+                        </div>
+                        <div id="share-card-rows" class="divide-y divide-slate-800/50">
+                        </div>
+                    </div>
+
+                    <div class="text-center pt-2 border-t border-slate-800 text-[10px] text-slate-500">
+                        الأسعار قابلة للتغير · dollarhouse.com
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="downloadShareImage()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition">
+                    <i class="fa-solid fa-download"></i> تنزيل PNG
+                </button>
+                <button onclick="triggerShareImageFile()" class="bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-amber-400 hover:to-yellow-300 text-slate-950 font-black py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition">
+                    <i class="fa-solid fa-share-nodes"></i> مشاركة الصورة
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== CURRENCY CONVERTER MODAL ==================== -->
+    <div id="converterModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeConverterModal()" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition border border-slate-200 dark:border-slate-700 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-calculator text-amber-500 dark:text-amber-400"></i> محول العملات الذكي
+            </h3>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">المبلغ المراد تحويله</label>
+                    <input type="number" id="conv-amount" value="100" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-amber-500" oninput="runConverter()">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">من عملة</label>
+                        <select id="conv-from" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-3 text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-amber-500 text-sm" onchange="runConverter()">
+                            <option value="USD">دولار أمريكي (USD)</option>
+                            <option value="IQD">دينار عراقي (IQD)</option>
+                            <option value="TRY">ليرة تركية (TRY)</option>
+                            <option value="EUR">يورو (EUR)</option>
+                            <option value="GBP">باوند (GBP)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">إلى عملة</label>
+                        <select id="conv-to" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-3 text-slate-900 dark:text-white font-semibold focus:outline-none focus:border-amber-500 text-sm" onchange="runConverter()">
+                            <option value="IQD" selected>دينار عراقي (IQD)</option>
+                            <option value="USD">دولار أمريكي (USD)</option>
+                            <option value="TRY">ليرة تركية (TRY)</option>
+                            <option value="EUR">يورو (EUR)</option>
+                            <option value="GBP">باوند (GBP)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-center mt-6">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">النتيجة المحسوبة</span>
+                    <div class="text-2xl font-black text-amber-600 dark:text-amber-400" id="conv-result">169,100 IQD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== DAILY DOLLAR HISTORY LOG MODAL ==================== -->
+    <div id="historyModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button onclick="closeHistoryModal()" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition border border-slate-200 dark:border-slate-700 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-chart-line text-emerald-600 dark:text-emerald-400"></i> سجل أسعار الدولار اليومية
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">حركة سعر صرف 100 دولار مقابل الدينار العراقي خلال الأيام الأخيرة</p>
+            <div class="space-y-3 max-h-[300px] overflow-y-auto pr-1" id="history-list">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== ADMIN PANEL MODAL ==================== -->
+    <div id="adminModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button onclick="closeAdminModal()" class="absolute top-5 left-5 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 flex items-center justify-center transition border border-slate-200 dark:border-slate-700 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div id="admin-login-view">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-amber-500 dark:text-amber-400"></i> تسجيل دخول المشرف
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">أدخل رمز المرور للتحكم وتعديل الأسعار ومتابعة طلبات الزوار</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">رمز المرور</label>
+                        <input type="password" id="admin-pass" placeholder="••••" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-amber-500">
+                    </div>
+                    <button onclick="checkAdminLogin()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">دخول لوحة التحكم</button>
+                </div>
+            </div>
+
+            <div id="admin-dashboard-view" class="hidden">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-amber-500 dark:text-amber-400"></i> لوحة تحكم الموقع
+                    </h3>
+                    <span class="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs px-2.5 py-1 rounded-full font-bold">متصل</span>
+                </div>
+                
+                <div class="flex gap-2 mb-4 border-b border-slate-200 dark:border-slate-800 pb-2 overflow-x-auto">
+                    <button onclick="switchAdminTab('prices')" id="tab-btn-prices" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition">أسعار العملات</button>
+                    <button onclick="switchAdminTab('requests')" id="tab-btn-requests" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition relative">طلبات الزوار <span id="requests-tab-badge" class="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full hidden"></span></button>
+                    <button onclick="switchAdminTab('social')" id="tab-btn-social" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition">روابط التواصل</button>
+                </div>
+
+                <!-- Prices Management Section -->
+                <div id="admin-prices-section">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">تعديل أسعار الشراء والبيع للعملات بشكل فوري</p>
+                    <div class="space-y-3 max-h-[250px] overflow-y-auto pr-1 mb-4" id="admin-currencies-list">
+                    </div>
+                    <button onclick="saveAdminData()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">حفظ تحديثات الأسعار</button>
+                </div>
+
+                <!-- Visitor Chat Requests Section -->
+                <div id="admin-requests-section" class="hidden">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">طلبات الزوار الراغبين بالتحدث مع موظف الدعم</p>
+                    <div class="space-y-3 max-h-[280px] overflow-y-auto pr-1" id="admin-requests-list">
+                        <!-- Dynamically populated -->
+                    </div>
+                </div>
+
+                <!-- Social Links Management Section -->
+                <div id="admin-social-section" class="hidden">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">أدخل روابط حسابات التواصل الاجتماعي الخاصة بالمكتب</p>
+                    <div class="space-y-3 max-h-[250px] overflow-y-auto pr-1 mb-4">
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1"><i class="fa-brands fa-telegram text-sky-400 ml-1"></i> رابط قناة تليجرام</label>
+                            <input type="text" id="admin-social-telegram" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1"><i class="fa-brands fa-whatsapp text-emerald-400 ml-1"></i> رابط واتساب</label>
+                            <input type="text" id="admin-social-whatsapp" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1"><i class="fa-brands fa-instagram text-pink-400 ml-1"></i> رابط إنستغرام</label>
+                            <input type="text" id="admin-social-instagram" class="w-full bg-slate-100 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+                    <button onclick="saveAdminData()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">حفظ الروابط</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Custom Notification Box -->
+    <div id="custom-toast" class="fixed bottom-5 right-5 z-50 bg-white dark:bg-slate-900 border border-amber-500/50 text-slate-900 dark:text-white px-5 py-3 rounded-2xl shadow-2xl transform translate-y-32 opacity-0 transition-all duration-300 flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-amber-500 dark:text-amber-400 text-xl" id="toast-icon"></i>
+        <div>
+            <h5 class="font-bold text-sm" id="toast-title">إشعار</h5>
+            <p class="text-xs text-slate-600 dark:text-slate-300" id="toast-message">تمت العملية بنجاح</p>
+        </div>
+    </div>
+
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const defaultCurrencies = [
+            { code: 'IQD', name: 'دينار', flag: '🇮🇶', buy: 169100, sell: 169250, change: '+0.1%' },
+            { code: 'EUR', name: 'يورو', flag: '🇪🇺', buy: 111.7, sell: 112, change: '+0.05%' },
+            { code: 'GBP', name: 'باوند', flag: '🇬🇧', buy: 131.25, sell: 132, change: '-0.1%' },
+            { code: 'TRY', name: 'تركي', flag: '🇹🇷', buy: 4990, sell: 4890, change: '+0.2%' },
+            { code: 'NOK', name: 'نرويجي', flag: '🇳🇴', buy: 87, sell: 91, change: '+0.1%' },
+            { code: 'SEK', name: 'سويدي', flag: '🇸🇪', buy: 87, sell: 91, change: '-0.05%' },
+            { code: 'SAR', name: 'سعودي', flag: '🇸🇦', buy: 385, sell: 370, change: '0.0%' },
+            { code: 'AED', name: 'إماراتي', flag: '🇦🇪', buy: 370, sell: 363, change: '+0.03%' },
+            { code: 'CAD', name: 'كندي', flag: '🇨🇦', buy: 68, sell: 70, change: '-0.1%' },
+            { code: 'AUD', name: 'أسترالي', flag: '🇦🇺', buy: 67, sell: 69, change: '+0.1%' },
+            { code: 'CHF', name: 'سويسري', flag: '🇨🇭', buy: 119.5, sell: 121, change: '+0.08%' },
+            { code: 'DKK', name: 'دانماركي', flag: '🇩🇰', buy: 137, sell: 141, change: '0.0%' },
+            { code: 'QAR', name: 'قطري', flag: '🇶🇦', buy: 390, sell: 375, change: '+0.04%' }
+        ];
+
+        let currenciesData = JSON.parse(localStorage.getItem('dollarHouseCurrencies')) || defaultCurrencies;
+
+        const defaultSocialLinks = {
+            telegram: 'https://t.me/your_channel',
+            whatsapp: 'https://wa.me/9640000000000',
+            instagram: 'https://instagram.com/your_account'
+        };
+
+        let socialLinks = JSON.parse(localStorage.getItem('dollarHouseSocial')) || defaultSocialLinks;
+
+        const defaultHistoryData = [
+            { date: '21/10/2026', price: '169,100', status: 'استقرار طفيف' },
+            { date: '20/10/2026', price: '168,900', status: 'ارتفاع طفيف' },
+            { date: '19/10/2026', price: '168,500', status: 'استقرار' },
+            { date: '18/10/2026', price: '169,000', status: 'انخفاض طفيف' },
+            { date: '17/10/2026', price: '169,200', status: 'مستقر' }
+        ];
+
+        let historyData = JSON.parse(localStorage.getItem('dollarHouseHistory')) || defaultHistoryData;
+        let chatRequests = JSON.parse(localStorage.getItem('dollarHouseChatRequests')) || [];
+
+        window.onload = function () {
+            initTheme();
+            initNotificationsState();
+            refreshUI();
+            updateTimestamp();
+            checkNewRequestsBadge();
+        };
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('dollarHouseTheme');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                document.documentElement.classList.add('dark');
+            }
+            updateThemeButtonUI();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('dollarHouseTheme', 'light');
+                showToast('الوضع الصباحي', 'تم تفعيل الوضع الصباحي بنجاح');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('dollarHouseTheme', 'dark');
+                showToast('الوضع الليلي', 'تم تفعيل الوضع الليلي بنجاح');
+            }
+            updateThemeButtonUI();
+        }
+
+        function updateThemeButtonUI() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const icon = document.getElementById('theme-toggle-icon');
+            const text = document.getElementById('theme-toggle-text');
+            if (!icon || !text) return;
+
+            if (isDark) {
+                icon.className = 'fa-solid fa-sun text-amber-400';
+                text.innerText = 'الوضع الصباحي';
+            } else {
+                icon.className = 'fa-solid fa-moon text-slate-700';
+                text.innerText = 'الوضع الليلي';
+            }
+        }
+
+        function initNotificationsState() {
+            const isSubscribed = localStorage.getItem('dollarHouseNotifications') === 'true';
+            updateNotificationButtonUI(isSubscribed);
+        }
+
+        function toggleNotifications() {
+            const currentStatus = localStorage.getItem('dollarHouseNotifications') === 'true';
+            const newStatus = !currentStatus;
+            localStorage.setItem('dollarHouseNotifications', newStatus ? 'true' : 'false');
+            updateNotificationButtonUI(newStatus);
+            showToast(newStatus ? 'التنبيهات مفعلة' : 'التنبيهات معطلة', newStatus ? 'ستصلك إشعارات فورية عند تحديث الأسعار' : 'تم إيقاف الإشعارات');
+        }
+
+        function updateNotificationButtonUI(isSubscribed) {
+            const icon = document.getElementById('notif-icon');
+            const text = document.getElementById('notif-text');
+            const btn = document.getElementById('notif-toggle-btn');
+            if (!icon || !text || !btn) return;
+
+            if (isSubscribed) {
+                icon.className = 'fa-solid fa-bell text-amber-500 dark:text-amber-400';
+                text.innerText = 'التنبيهات مفعلة';
+                btn.className = 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm';
+            } else {
+                icon.className = 'fa-solid fa-bell-slash text-slate-400';
+                text.innerText = 'التنبيهات معطلة';
+                btn.className = 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 px-2.5 sm:px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-sm';
+            }
+        }
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'dollarHouseCurrencies' && e.newValue) {
+                currenciesData = JSON.parse(e.newValue);
+                refreshUI();
+            }
+            if (e.key === 'dollarHouseSocial' && e.newValue) {
+                socialLinks = JSON.parse(e.newValue);
+                renderSocialLinks();
+            }
+            if (e.key === 'dollarHouseChatRequests' && e.newValue) {
+                chatRequests = JSON.parse(e.newValue);
+                checkNewRequestsBadge();
+                renderAdminRequestsList();
+            }
+        });
+
+        function refreshUI() {
+            renderCurrenciesTable();
+            updateMainCards();
+            renderShareCardRows();
+            renderHistoryList();
+            renderSocialLinks();
+            quickCalculate();
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateStr = now.toLocaleDateString('ar-IQ');
+            const timeEl = document.getElementById('last-update-time');
+            if(timeEl) timeEl.innerText = timeStr;
+            const shareTimestampEl = document.getElementById('share-modal-timestamp');
+            if(shareTimestampEl) {
+                shareTimestampEl.innerText = `وقت إنشاء الصورة: - ${timeStr}, ${dateStr}`;
+            }
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('custom-toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        // --- Chat with Employee Logic ---
+        function openChatModal() {
+            document.getElementById('chatModal').classList.remove('hidden');
+            document.getElementById('chatModal').classList.add('flex');
+        }
+        function closeChatModal() {
+            document.getElementById('chatModal').classList.remove('flex');
+            document.getElementById('chatModal').classList.add('hidden');
+        }
+
+        function submitVisitorChatRequest() {
+            const name = document.getElementById('visitor-name').value.trim();
+            const phone = document.getElementById('visitor-phone').value.trim();
+            const message = document.getElementById('visitor-message').value.trim();
+
+            if(!name || !phone) {
+                showToast('تنبيه', 'يرجى إدخال الاسم ورقم الهاتف على الأقل');
+                return;
+            }
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) + ' - ' + now.toLocaleDateString('ar-IQ');
+
+            const newReq = {
+                id: Date.now(),
+                name: name,
+                phone: phone,
+                message: message || 'بدون تفاصيل',
+                time: timeStr,
+                status: 'جديد'
+            };
+
+            chatRequests.unshift(newReq);
+            localStorage.setItem('dollarHouseChatRequests', JSON.stringify(chatRequests));
+
+            closeChatModal();
+            showToast('تم الإرسال بنجاح', 'تم إرسال طلبك إلى الإدارة، سيتواصل معك الموظف قريباً');
+            
+            document.getElementById('visitor-name').value = '';
+            document.getElementById('visitor-phone').value = '';
+            document.getElementById('visitor-message').value = '';
+
+            checkNewRequestsBadge();
+        }
+
+        function checkNewRequestsBadge() {
+            const dot = document.getElementById('admin-badge-dot');
+            const tabBadge = document.getElementById('requests-tab-badge');
+            const unread = chatRequests.filter(r => r.status === 'جديد').length;
+
+            if(unread > 0) {
+                if(dot) dot.classList.remove('hidden');
+                if(tabBadge) tabBadge.classList.remove('hidden');
+            } else {
+                if(dot) dot.classList.add('hidden');
+                if(tabBadge) tabBadge.classList.add('hidden');
+            }
+        }
+
+        function renderAdminRequestsList() {
+            const list = document.getElementById('admin-requests-list');
+            if(!list) return;
+            list.innerHTML = '';
+
+            if(chatRequests.length === 0) {
+                list.innerHTML = '<p class="text-center text-xs text-slate-500 py-6">لا توجد طلبات زوار حالياً</p>';
+                return;
+            }
+
+            chatRequests.forEach((req) => {
+                const div = document.createElement('div');
+                div.className = 'bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-2';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-user text-amber-500"></i> ${req.name}
+                        </span>
+                        <span class="text-[10px] text-slate-400">${req.time}</span>
+                    </div>
+                    <div class="text-xs text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                        <strong>الهاتف:</strong> <a href="tel:${req.phone}" class="text-amber-500 font-bold">${req.phone}</a><br>
+                        <strong>الرسالة:</strong> ${req.message}
+                    </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <a href="https://wa.me/${req.phone.replace(/[^0-9]/g, '')}" target="_blank" onclick="markRequestRead(${req.id})" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> محادثة واتساب
+                        </a>
+                        <button onclick="deleteRequest(${req.id})" class="text-rose-500 hover:text-rose-400 text-xs font-semibold px-2 py-1">حذف الطلب</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function markRequestRead(id) {
+            const req = chatRequests.find(r => r.id === id);
+            if(req) {
+                req.status = 'تمت المتابعة';
+                localStorage.setItem('dollarHouseChatRequests', JSON.stringify(chatRequests));
+                checkNewRequestsBadge();
+                renderAdminRequestsList();
+            }
+        }
+
+        function deleteRequest(id) {
+            chatRequests = chatRequests.filter(r => r.id !== id);
+            localStorage.setItem('dollarHouseChatRequests', JSON.stringify(chatRequests));
+            checkNewRequestsBadge();
+            renderAdminRequestsList();
+        }
+
+        function renderSocialLinks() {
+            const container = document.getElementById('footer-social-links');
+            if(!container) return;
+            container.innerHTML = `
+                <a href="${socialLinks.telegram}" target="_blank" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-sky-500 hover:text-white dark:bg-slate-800 dark:hover:bg-sky-500 dark:hover:text-slate-950 text-sky-500 dark:text-sky-400 flex items-center justify-center text-base transition border border-slate-200 dark:border-slate-700 shadow-sm" title="تليجرام">
+                    <i class="fa-brands fa-telegram"></i>
+                </a>
+                <a href="${socialLinks.whatsapp}" target="_blank" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-emerald-500 hover:text-white dark:bg-slate-800 dark:hover:bg-emerald-500 dark:hover:text-slate-950 text-emerald-500 dark:text-emerald-400 flex items-center justify-center text-base transition border border-slate-200 dark:border-slate-700 shadow-sm" title="واتساب">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="${socialLinks.instagram}" target="_blank" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-pink-600 hover:text-white dark:bg-slate-800 dark:hover:bg-pink-600 dark:hover:text-white text-pink-500 dark:text-pink-400 flex items-center justify-center text-base transition border border-slate-200 dark:border-slate-700 shadow-sm" title="إنستغرام">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            `;
+        }
+
+        function renderCurrenciesTable() {
+            const tbody = document.getElementById('currencies-table-body');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            
+            currenciesData.forEach(c => {
+                let changeStr = c.change || '0.0%';
+                let badgeClass = 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+                
+                if (changeStr.toString().startsWith('+') || parseFloat(changeStr) > 0) {
+                    badgeClass = 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400';
+                } else if (changeStr.toString().startsWith('-') || parseFloat(changeStr) < 0) {
+                    badgeClass = 'bg-rose-500/10 text-rose-600 dark:text-rose-400';
+                }
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-100/60 dark:hover:bg-slate-800/40 transition';
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 sm:px-4 flex items-center gap-2 font-bold text-slate-900 dark:text-white">
+                        <span class="text-lg">${c.flag}</span>
+                        <span>${c.name}</span>
+                    </td>
+                    <td class="py-2.5 px-3 sm:px-4 text-slate-500 dark:text-slate-400 font-mono">${c.code}</td>
+                    <td class="py-2.5 px-3 sm:px-4 text-amber-600 dark:text-amber-400 font-bold">${Number(c.buy).toLocaleString()}</td>
+                    <td class="py-2.5 px-3 sm:px-4 text-slate-900 dark:text-white font-bold">${Number(c.sell).toLocaleString()}</td>
+                    <td class="py-2.5 px-3 sm:px-4 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold inline-block ${badgeClass}">
+                            ${changeStr}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderShareCardRows() {
+            const container = document.getElementById('share-card-rows');
+            if(!container) return;
+            container.innerHTML = '';
+            currenciesData.forEach(c => {
+                const row = document.createElement('div');
+                row.className = 'px-3 py-2 flex justify-between items-center text-xs';
+                row.innerHTML = `
+                    <span class="font-bold text-slate-200">${c.flag} ${c.code} (${c.name})</span>
+                    <div class="flex gap-6 font-mono">
+                        <span class="w-16 text-center text-amber-400 font-bold">${Number(c.buy).toLocaleString()}</span>
+                        <span class="w-16 text-center text-slate-100 font-bold">${Number(c.sell).toLocaleString()}</span>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function updateMainCards() {
+            const usd = currenciesData.find(c => c.code === 'IQD');
+            if(usd) {
+                const buyEl = document.getElementById('main-usd-buy');
+                const buyRateEl = document.getElementById('main-usd-buy-rate');
+                const sellRateEl = document.getElementById('main-usd-sell-rate');
+                if(buyEl) buyEl.innerText = Number(usd.buy).toLocaleString();
+                if(buyRateEl) buyRateEl.innerText = Number(usd.buy).toLocaleString();
+                if(sellRateEl) sellRateEl.innerText = Number(usd.sell).toLocaleString();
+            }
+        }
+
+        function quickCalculate() {
+            const inputEl = document.getElementById('quick-calc-input');
+            const resEl = document.getElementById('quick-calc-result');
+            if(!inputEl || !resEl) return;
+            const val = parseFloat(inputEl.value) || 0;
+            const usd = currenciesData.find(c => c.code === 'IQD');
+            const rate = usd ? Number(usd.buy) : 169100;
+            const res = (val / 100) * rate;
+            resEl.innerText = res.toLocaleString() + ' IQD';
+        }
+
+        function fetchLivePrices() {
+            updateTimestamp();
+            showToast('تم التحديث', 'تم جلب أحدث أسعار الصرف من السوق بنجاح');
+        }
+
+        function openShareModal() {
+            updateTimestamp();
+            renderShareCardRows();
+            document.getElementById('shareModal').classList.remove('hidden');
+            document.getElementById('shareModal').classList.add('flex');
+        }
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('flex');
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+
+        function openConverterModal() {
+            document.getElementById('converterModal').classList.remove('hidden');
+            document.getElementById('converterModal').classList.add('flex');
+            runConverter();
+        }
+        function closeConverterModal() {
+            document.getElementById('converterModal').classList.remove('flex');
+            document.getElementById('converterModal').classList.add('hidden');
+        }
+
+        function openHistoryModal() {
+            renderHistoryList();
+            document.getElementById('historyModal').classList.remove('hidden');
+            document.getElementById('historyModal').classList.add('flex');
+        }
+        function closeHistoryModal() {
+            document.getElementById('historyModal').classList.remove('flex');
+            document.getElementById('historyModal').classList.add('hidden');
+        }
+
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('adminModal').classList.add('flex');
+        }
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('flex');
+            document.getElementById('adminModal').classList.add('hidden');
+        }
+
+        function switchAdminTab(tab) {
+            const pricesSec = document.getElementById('admin-prices-section');
+            const requestsSec = document.getElementById('admin-requests-section');
+            const socialSec = document.getElementById('admin-social-section');
+            
+            const pricesBtn = document.getElementById('tab-btn-prices');
+            const requestsBtn = document.getElementById('tab-btn-requests');
+            const socialBtn = document.getElementById('tab-btn-social');
+
+            pricesSec.classList.add('hidden');
+            requestsSec.classList.add('hidden');
+            socialSec.classList.add('hidden');
+
+            pricesBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition';
+            requestsBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition relative';
+            socialBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-300 transition';
+
+            if(tab === 'prices') {
+                pricesSec.classList.remove('hidden');
+                pricesBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition';
+            } else if(tab === 'requests') {
+                requestsSec.classList.remove('hidden');
+                requestsBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition relative';
+                renderAdminRequestsList();
+            } else {
+                socialSec.classList.remove('hidden');
+                socialBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 transition';
+            }
+        }
+
+        function renderHistoryList() {
+            const list = document.getElementById('history-list');
+            if(!list) return;
+            list.innerHTML = '';
+            
+            const currentUsd = currenciesData.find(c => c.code === 'IQD');
+            if(currentUsd && historyData.length > 0) {
+                historyData[0].price = Number(currentUsd.buy).toLocaleString();
+            }
+
+            historyData.forEach(h => {
+                const item = document.createElement('div');
+                item.className = 'bg-slate-100 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-calendar-day"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm">${h.date}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">${h.status}</p>
+                        </div>
+                    </div>
+                    <span class="text-amber-600 dark:text-amber-400 font-black text-base">${h.price} IQD</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // Updated Smart Converter Calculation Logic including TRY (Turkish Lira)
+        function runConverter() {
+            const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
+            const from = document.getElementById('conv-from').value;
+            const to = document.getElementById('conv-to').value;
+            
+            const usd = currenciesData.find(c => c.code === 'IQD');
+            const tryCurr = currenciesData.find(c => c.code === 'TRY');
+
+            let usdRate = (usd ? Number(usd.buy) : 169100) / 100; // IQD per 1 USD
+            // Calculate TRY per 1 USD based on current TRY rate in table (e.g., 100 USD = 4990 TRY)
+            let tryUsdRate = tryCurr && Number(tryCurr.buy) > 0 ? (Number(tryCurr.buy) / 100) : 49.9;
+
+            let amountInUSD = amount;
+
+            // Convert input currency to USD base
+            if (from === 'IQD') {
+                amountInUSD = amount / usdRate;
+            } else if (from === 'TRY') {
+                amountInUSD = amount / tryUsdRate;
+            } else if (from === 'EUR') {
+                amountInUSD = amount * 1.08;
+            } else if (from === 'GBP') {
+                amountInUSD = amount * 1.25;
+            }
+
+            // Convert USD base to target currency
+            let finalRes = amountInUSD;
+            if (to === 'IQD') {
+                finalRes = amountInUSD * usdRate;
+            } else if (to === 'TRY') {
+                finalRes = amountInUSD * tryUsdRate;
+            } else if (to === 'EUR') {
+                finalRes = amountInUSD / 1.08;
+            } else if (to === 'GBP') {
+                finalRes = amountInUSD / 1.25;
+            }
+
+            document.getElementById('conv-result').innerText = finalRes.toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' ' + to;
+        }
+
+        function checkAdminLogin() {
+            const pass = document.getElementById('admin-pass').value;
+            if(pass === '1234' || pass === 'admin') {
+                document.getElementById('admin-login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard-view').classList.remove('hidden');
+                renderAdminCurrenciesList();
+                renderAdminSocialInputs();
+                renderAdminRequestsList();
+                showToast('تم تسجيل الدخول', 'مرحباً بك في لوحة المشرف');
+            } else {
+                showToast('خطأ', 'رمز المرور غير صحيح');
+            }
+        }
+
+        function renderAdminCurrenciesList() {
+            const list = document.getElementById('admin-currencies-list');
+            if(!list) return;
+            list.innerHTML = '';
+            currenciesData.forEach((c, idx) => {
+                const div = document.createElement('div');
+                div.className = 'bg-slate-100 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2';
+                div.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span>${c.flag}</span>
+                        <span class="text-xs font-bold text-slate-900 dark:text-white">${c.name} (${c.code})</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="admin-buy-${idx}" value="${c.buy}" class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 text-xs text-amber-600 dark:text-amber-400 font-bold focus:outline-none">
+                        <input type="number" id="admin-sell-${idx}" value="${c.sell}" class="w-24 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1 text-xs text-slate-900 dark:text-white font-bold focus:outline-none">
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function renderAdminSocialInputs() {
+            document.getElementById('admin-social-telegram').value = socialLinks.telegram || '';
+            document.getElementById('admin-social-whatsapp').value = socialLinks.whatsapp || '';
+            document.getElementById('admin-social-instagram').value = socialLinks.instagram || '';
+        }
+
+        function saveAdminData() {
+            currenciesData.forEach((c, idx) => {
+                const buyInput = document.getElementById(`admin-buy-${idx}`);
+                const sellInput = document.getElementById(`admin-sell-${idx}`);
+                if (buyInput && sellInput) {
+                    const newBuy = parseFloat(buyInput.value);
+                    const newSell = parseFloat(sellInput.value);
+                    
+                    if (!isNaN(newBuy) && newBuy !== c.buy) {
+                        const diff = newBuy - c.buy;
+                        const percent = ((diff / c.buy) * 100).toFixed(2);
+                        c.change = (percent >= 0 ? '+' : '') + percent + '%';
+                        c.buy = newBuy;
+                    } else if (!isNaN(newBuy) && newBuy === c.buy) {
+                        if(!c.change) c.change = '0.0%';
+                    }
+
+                    if (!isNaN(newSell)) {
+                        c.sell = newSell;
+                    }
+                }
+            });
+
+            socialLinks.telegram = document.getElementById('admin-social-telegram').value.trim();
+            socialLinks.whatsapp = document.getElementById('admin-social-whatsapp').value.trim();
+            socialLinks.instagram = document.getElementById('admin-social-instagram').value.trim();
+
+            localStorage.setItem('dollarHouseCurrencies', JSON.stringify(currenciesData));
+            localStorage.setItem('dollarHouseHistory', JSON.stringify(historyData));
+            localStorage.setItem('dollarHouseSocial', JSON.stringify(socialLinks));
+
+            refreshUI();
+            closeAdminModal();
+            showToast('تم النشر', 'تم تحديث البيانات وروابط التواصل بنجاح');
+        }
+
+        function downloadShareImage() {
+            const cardElement = document.getElementById('capture-card');
+            html2canvas(cardElement, {
+                scale: 2,
+                backgroundColor: '#0f172a',
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'dollar-house-rates.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast('تم التنزيل', 'تم حفظ صورة الأسعار بنجاح');
+            }).catch(err => {
+                showToast('خطأ', 'تعذر تنزيل الصورة');
+            });
+        }
+
+        function triggerShareImageFile() {
+            const cardElement = document.getElementById('capture-card');
+            html2canvas(cardElement, {
+                scale: 2,
+                backgroundColor: '#0f172a',
+                useCORS: true
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    const file = new File([blob], 'dollar-house-rates.png', { type: 'image/png' });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            title: 'أسعار الصرف - دولار هاوس',
+                            text: 'أحدث أسعار العملات في العراق عبر منصة دولار هاوس',
+                            files: [file]
+                        }).then(() => {
+                            showToast('تمت المشاركة', 'تمت مشاركة الصورة بنجاح');
+                        }).catch(() => {});
+                    } else {
+                        downloadShareImage();
+                    }
+                });
+            }).catch(err => {
+                showToast('خطأ', 'تعذر مشاركة الصورة');
+            });
+        }
+    </script>
+</body>
+</html>
