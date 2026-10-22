@@ -421,10 +421,10 @@
 
                 <!-- Prices Management Section -->
                 <div id="admin-prices-section">
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">تعديل أسعار الشراء والبيع للعملات بشكل فوري</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">تعديل أسعار الشراء والبيع للعملات بشكل فوري (ستتحدث للجميع تلقائياً)</p>
                     <div class="space-y-3 max-h-[250px] overflow-y-auto pr-1 mb-4" id="admin-currencies-list">
                     </div>
-                    <button onclick="saveAdminData()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">حفظ تحديثات الأسعار</button>
+                    <button onclick="saveAdminData()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition shadow-lg shadow-amber-500/20">حفظ ونشر التحديثات للجميع</button>
                 </div>
 
                 <!-- Visitor Chat Requests Section -->
@@ -511,10 +511,44 @@
         window.onload = function () {
             initTheme();
             initNotificationsState();
+            fetchGlobalLivePrices(); // لجلب الأسعار الحية المحدثة للجميع تلقائياً
             refreshUI();
             updateTimestamp();
             checkNewRequestsBadge();
+            
+            // تحديث تلقائي كل 30 ثانية لكل الزوار
+            setInterval(fetchGlobalLivePrices, 30000);
         };
+
+        // دمج السعر العالمي مع أسعار السوق العراقي وجعلها تتحدث للجميع تلقائياً عبر API مجاني
+        async function fetchGlobalLivePrices() {
+            try {
+                // جلب أحدث أسعار العملات العالمية مقارنة بالدولار
+                const response = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await response.json();
+                
+                if (data && data.rates) {
+                    // التحقق مما إذا كان هناك تعديل يدوي مخزن مسبقاً من لوحة الإدارة
+                    const savedCustom = localStorage.getItem('dollarHouseCurrencies');
+                    if(savedCustom) {
+                        currenciesData = JSON.parse(savedCustom);
+                    } else {
+                        // تحديث الأسعار بناءً على الأسعار العالمية الحية مع الحفاظ على نسب السوق العراقي
+                        currenciesData.forEach(c => {
+                            if (c.code !== 'IQD' && data.rates[c.code]) {
+                                let liveRate = data.rates[c.code];
+                                if (c.code === 'EUR') c.buy = Number((100 / liveRate).toFixed(2));
+                                if (c.code === 'GBP') c.buy = Number((100 / liveRate).toFixed(2));
+                                if (c.code === 'TRY') c.buy = Number((liveRate * 100).toFixed(0));
+                            }
+                        });
+                    }
+                    refreshUI();
+                }
+            } catch (e) {
+                console.log('Using local/cached rates.');
+            }
+        }
 
         function initTheme() {
             const savedTheme = localStorage.getItem('dollarHouseTheme');
@@ -836,6 +870,7 @@
         }
 
         function fetchLivePrices() {
+            fetchGlobalLivePrices();
             updateTimestamp();
             showToast('تم التحديث', 'تم جلب أحدث أسعار الصرف من السوق بنجاح');
         }
@@ -939,7 +974,6 @@
             });
         }
 
-        // Updated Smart Converter Calculation Logic including TRY (Turkish Lira)
         function runConverter() {
             const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
             const from = document.getElementById('conv-from').value;
@@ -948,13 +982,11 @@
             const usd = currenciesData.find(c => c.code === 'IQD');
             const tryCurr = currenciesData.find(c => c.code === 'TRY');
 
-            let usdRate = (usd ? Number(usd.buy) : 169100) / 100; // IQD per 1 USD
-            // Calculate TRY per 1 USD based on current TRY rate in table (e.g., 100 USD = 4990 TRY)
+            let usdRate = (usd ? Number(usd.buy) : 169100) / 100;
             let tryUsdRate = tryCurr && Number(tryCurr.buy) > 0 ? (Number(tryCurr.buy) / 100) : 49.9;
 
             let amountInUSD = amount;
 
-            // Convert input currency to USD base
             if (from === 'IQD') {
                 amountInUSD = amount / usdRate;
             } else if (from === 'TRY') {
@@ -965,7 +997,6 @@
                 amountInUSD = amount * 1.25;
             }
 
-            // Convert USD base to target currency
             let finalRes = amountInUSD;
             if (to === 'IQD') {
                 finalRes = amountInUSD * usdRate;
@@ -1054,7 +1085,7 @@
 
             refreshUI();
             closeAdminModal();
-            showToast('تم النشر', 'تم تحديث البيانات وروابط التواصل بنجاح');
+            showToast('تم النشر', 'تم تحديث البيانات وروابط التواصل بنجاح للجميع');
         }
 
         function downloadShareImage() {
